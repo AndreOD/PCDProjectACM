@@ -1,4 +1,4 @@
-package gameElements;
+package main.gameElements;
 
 public class Goal extends GameElement {
 

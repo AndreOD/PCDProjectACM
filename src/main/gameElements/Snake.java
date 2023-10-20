@@ -1,10 +1,10 @@
-package gameElements;
+package main.gameElements;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import board.Board;
+import main.board.Board;
 
 // TODO pintar blocos da snake
 public class Snake extends GameElement implements Unsurpassable {

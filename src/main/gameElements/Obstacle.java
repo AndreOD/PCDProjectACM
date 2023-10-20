@@ -1,4 +1,4 @@
-package gameElements;
+package main.gameElements;
 
 public class Obstacle extends GameElement implements Unsurpassable {
 

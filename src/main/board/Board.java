@@ -1,4 +1,4 @@
-package board;
+package main.board;
 
 import java.awt.geom.Point2D;
 
