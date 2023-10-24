@@ -1,13 +1,13 @@
-package main.gameElements;
+package test.alex;
 
-public class Obstacle extends GameElement implements Unsurpassable {
+public class ObstacleAlex extends GameElementAlex implements UnsurpassableAlex {
 
     public static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 0; // TODO_ThreadPool
     public static final int OBSTACLE_MOVE_INTERVAL = 0; // TODO_Put Value
     public static final int NUM_MOVES = 3;
 
-    Obstacle(int id) {
-        super(GameElement.getRandMove(), "Obstacle - " + id);
+    ObstacleAlex(int id) {
+        super(GameElementAlex.getRandMove(), "Obstacle - " + id);
     }
 
     void move() throws InterruptedException {

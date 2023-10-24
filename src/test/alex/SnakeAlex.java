@@ -1,34 +1,29 @@
-package main.gameElements;
+package test.alex;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-
-import main.board.Board;
-
-// TODO pintar blocos da snake
-public class Snake extends GameElement implements Unsurpassable {
-
+public class SnakeAlex extends GameElementAlex implements UnsurpassableAlex{
     List<Point2D> body = new ArrayList<>();
 
-    Snake(Point2D position, int id) {
+    SnakeAlex(Point2D position, int id) {
         super(position, "Snake - " + id);
     }
 
     void move() throws InterruptedException {
-        Goal goal = Goal.getInstance();
+        GoalAlex goal = GoalAlex.getInstance();
         Point2D goalPostion = goal.getPostion();
 
         // TODO POO Project Code? *Change position*
 
         // Verify if is valid move move
-        while (!Board.isValid(getPostion()))
+        while (!BoardAlex.isValid(getPostion()))
             wait();
 
-        // Catch Goal
+        // Catch GoalAlex
         if (getPostion().equals(goalPostion)) {
-            int valueGoal = goal.captureGoal();
-            increase(valueGoal);
+            int valueGoalAlex = goal.captureGoal();
+            increase(valueGoalAlex);
         }
     }
 

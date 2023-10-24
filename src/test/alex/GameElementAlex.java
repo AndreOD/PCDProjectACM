@@ -1,11 +1,11 @@
-package main.gameElements;
+package test.alex;
 
 import java.awt.geom.Point2D;
 
-public abstract class GameElement extends Thread {
+public abstract class GameElementAlex extends Thread {
     private Point2D position;
 
-    GameElement(Point2D position, String name) {
+    GameElementAlex(Point2D position, String name) {
         super(name);
         this.position = position;
     }

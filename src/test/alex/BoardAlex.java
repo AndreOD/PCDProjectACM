@@ -1,8 +1,8 @@
-package main.board;
+package test.alex;
 
 import java.awt.geom.Point2D;
 
-public class Board {
+public class BoardAlex {
     public static final int WIDTH = 10;
     public static final int HEIGHT = 10;
 

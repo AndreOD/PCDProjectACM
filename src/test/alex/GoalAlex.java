@@ -1,22 +1,22 @@
-package main.gameElements;
+package test.alex;
 
-public class Goal extends GameElement {
+public class GoalAlex extends GameElementAlex {
 
     public static final int MAX_VALUE = 9;
 
-    private static Goal INSTANCE = null;
+    private static GoalAlex INSTANCE = null;
     private int value = 0;
 
     // Singleton
-    public static Goal getInstance() {
+    public static GoalAlex getInstance() {
         if (INSTANCE == null)
-            INSTANCE = new Goal();
+            INSTANCE = new GoalAlex();
 
         return INSTANCE;
     }
 
-    private Goal() {
-        super(GameElement.getRandMove(), "Goal");
+    private GoalAlex() {
+        super(GameElementAlex.getRandMove(), "Goal");
     }
 
     public int captureGoal() {
