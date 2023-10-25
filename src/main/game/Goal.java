@@ -3,23 +3,28 @@ package main.game;
 import main.environment.Board;
 import main.environment.LocalBoard;
 
-public class Goal extends GameElement  {
-	private int value=1;
+public class Goal extends GameElement {
+	public static final int MAX_VALUE = 10;
+	private int value = 1;
 	private Board board;
-	public static final int MAX_VALUE=10;
-	public Goal( Board board2) {
+
+	// Constructors
+	public Goal(Board board2) {
 		this.board = board2;
 	}
-	
+
+	// Getters
 	public int getValue() {
 		return value;
 	}
+
+	// Setters
 	public void incrementValue() throws InterruptedException {
-		//TODO
+		// TODO
 	}
 
 	public int captureGoal() {
-//		TODO
+		// TODO
 		return -1;
 	}
 }

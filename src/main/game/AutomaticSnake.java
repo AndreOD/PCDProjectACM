@@ -12,11 +12,13 @@ import main.environment.Board;
 import main.environment.BoardPosition;
 
 public class AutomaticSnake extends Snake {
+	
+	// Constructors
 	public AutomaticSnake(int id, LocalBoard board) {
 		super(id,board);
-
 	}
 
+	// Thread Class
 	@Override
 	public void run() {
 		doInitialPositioning();
@@ -24,7 +26,6 @@ public class AutomaticSnake extends Snake {
 		try {
 			cells.getLast().request(this);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//TODO: automatic movement
