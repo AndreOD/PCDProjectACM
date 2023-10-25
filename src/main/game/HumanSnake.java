@@ -8,6 +8,7 @@ import main.environment.Board;
   */
 public abstract class HumanSnake extends Snake {
 	
+  // Constructors
 	public HumanSnake(int id,Board board) {
 		super(id,board);
 	}

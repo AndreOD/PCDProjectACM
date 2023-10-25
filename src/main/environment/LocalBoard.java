@@ -26,10 +26,9 @@ public class LocalBoard extends Board{
 	private static final int NUM_OBSTACLES = 25;
 	private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
-	
-
+	// Construtors
 	public LocalBoard() {
-		
+
 		for (int i = 0; i < NUM_SNAKES; i++) {
 			AutomaticSnake snake = new AutomaticSnake(i, this);
 			snakes.add(snake);
@@ -41,6 +40,7 @@ public class LocalBoard extends Board{
 //		System.err.println("All elements placed");
 	}
 
+	// Init
 	public void init() {
 		for(Snake s:snakes)
 			s.start();
@@ -48,8 +48,7 @@ public class LocalBoard extends Board{
 		setChanged();
 	}
 
-	
-
+	// Board Class
 	@Override
 	public void handleKeyPress(int keyCode) {
 		// do nothing... No keys relevant in local game
