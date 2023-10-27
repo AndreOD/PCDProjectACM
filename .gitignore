@@ -23,3 +23,7 @@ bin/
 *.xml
 .idea/codeStyles/Project.xml
 /PCDProjectACM.iml
+
+# VS Code Pathing
+src/resources*
+src/main/gui/BoardComponent.java
