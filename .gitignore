@@ -26,4 +26,3 @@ bin/
 
 # VS Code Nightmare
 src/resources/*
-src/main.gui.BoardComponent.java
