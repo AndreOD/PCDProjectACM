@@ -23,3 +23,6 @@ bin/
 *.xml
 .idea/codeStyles/Project.xml
 /PCDProjectACM.iml
+
+# VS Code Nightmare
+src/resources/*
