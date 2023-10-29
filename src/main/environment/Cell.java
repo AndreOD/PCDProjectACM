@@ -49,21 +49,32 @@ public class Cell {
 		// TODO coordination and mutual exclusion
 		gameElement = element;
 	}
-	
-	public void request(Snake snake)
-			throws InterruptedException {
-		// TODO coordination and mutual exclusion
+
+	public synchronized void request(Snake snake) throws InterruptedException {
+		while (isOcupiedBySnakeOrObstacle())
+			wait(); // TODO change wait to increase performance. 
+					// TODO_Prof : coordination and mutual exclusion
 		ocuppyingSnake = snake;
 	}
 
 	public void release() {
 		// TODO
+		ocuppyingSnake = null;
+		gameElement = null;
 	}
 
 	// Removes
+	/**
+	 * Removes goal from current Cell.<p>
+	 * Does not verify if current Cell has Goal.
+	 * @return {@code Goal removed} in the current Cell.
+	 * 
+	 * @see #isOcupiedByGoal()
+	 */
 	public Goal removeGoal() {
-		// TODO
-		return null;
+		Goal g = (Goal)gameElement;
+		gameElement = null;
+		return g;
 	}
 
 	public void removeObstacle() {
@@ -88,4 +99,9 @@ public class Cell {
 		return isOcupiedBySnake() || (gameElement != null && gameElement instanceof Obstacle);
 	}
 
+	// Object class
+	@Override
+	public String toString() {
+		return "[BoardPosition: " + position +" | " + (isOcupiedBySnake() ? ocuppyingSnake : gameElement)  +" ]";
+	}
 }
