@@ -88,7 +88,7 @@ public abstract class Snake extends Thread implements Serializable {
 			return;
 
 		Goal g = cell.removeGoal();
-		g.captureGoal();
+		int valueToIncrease = g.captureGoal();// TODO Increase Snake
 	}
 
 	// Auxiliar Functions
