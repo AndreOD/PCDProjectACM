@@ -20,4 +20,8 @@ public class Obstacle extends GameElement {
 		return remainingMoves;
 	}
 
+	// Setters
+	public void move() {
+		// TODO
+	}
 }

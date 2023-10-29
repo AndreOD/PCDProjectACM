@@ -17,8 +17,8 @@ public class SnakeAlex extends GameElementAlex implements UnsurpassableAlex{
         // TODO POO Project Code? *Change position*
 
         // Verify if is valid move move
-        while (!BoardAlex.isValid(getPostion()))
-            wait();
+        // while (!BoardAlex.isValid(getPostion()))
+        //     wait();
 
         // Catch GoalAlex
         if (getPostion().equals(goalPostion)) {

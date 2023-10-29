@@ -115,6 +115,21 @@ public abstract class Board extends Observable {
 
 	public abstract void handleKeyRelease();
 
+	// Testing
+	public void printCells(String wantedClass) {
+		for (int i = 0; i < cells.length; i++)
+			for (int j = 0; j < cells[i].length; j++)
+				switch (wantedClass) {
+					case "Goal":
+						if (cells[i][j].isOcupiedByGoal())
+							System.err.println(cells[i][j]);
+						break;
+					default:
+						break;
+				}
+
+	}
+
 	// Observable Class
 	@Override
 	public void setChanged() {
