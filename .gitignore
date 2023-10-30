@@ -26,4 +26,4 @@ bin/
 
 # VS Code Nightmare
 src/resources/*
-resources/*
+out/resources/*
