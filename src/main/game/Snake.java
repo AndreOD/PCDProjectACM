@@ -24,6 +24,8 @@ public abstract class Snake extends Thread implements Serializable {
 	private int id;
 	private Board board;
 
+	private int leftToIncrease = 0;
+
 	// Constructors
 	public Snake(int id, Board board) {
 		super("[Snake - " + id + "]");
@@ -72,14 +74,17 @@ public abstract class Snake extends Thread implements Serializable {
 		cell.request(this);
 		cells.add(cell);
 
-		// Clear Tail
-		cells.removeFirst().release();
+		if (leftToIncrease > 0)
+			leftToIncrease--; // Dont clear tail to increase
+		else
+			cells.removeFirst().release(); // Clear Tail
 
 		// Attempt to capture Goal
 		captureGoal(cell);
 
 		// Repaint
 		board.setChanged();
+
 	}
 
 	// Capture Goal
@@ -87,8 +92,12 @@ public abstract class Snake extends Thread implements Serializable {
 		if (!cell.isOcupiedByGoal())
 			return;
 
-		Goal g = cell.removeGoal();
-		int valueToIncrease = g.captureGoal();// TODO Increase Snake
+		Goal g = cell.getGoal();
+		leftToIncrease += g.captureGoal();
+		cell.removeGoal();
+
+
+		//int valueToIncrease = g.captureGoal();// TODO Increase Snake
 	}
 
 	// Auxiliar Functions

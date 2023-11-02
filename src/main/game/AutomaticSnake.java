@@ -2,6 +2,7 @@ package main.game;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.text.Position;
 
@@ -22,14 +23,21 @@ public class AutomaticSnake extends Snake {
 	/**
 	 * Calculates next position of snake's head.
 	 * Does not verify if next position is occupied by any obstacles.
-	 * 
+	 *
 	 * @return {@code BoardPosition} - new Position closer to Goal
 	 */
-	BoardPosition nextMove() {
-		BoardPosition headPostion = cells.getLast().getPosition();
-		BoardPosition vectorToGoal = headPostion.vectorTo(getBoard().getGoalPosition());
-		return headPostion.plus(vectorToGoal);
+	BoardPosition nextMove(boolean random) {
+		if (random){
+			int randomDirectionIndex = ThreadLocalRandom.current().nextInt(4);
+			return getBoard().getNeighboringPositions(getCells().getLast()).get(randomDirectionIndex);
+
+		}else {
+			BoardPosition headPostion = cells.getLast().getPosition();
+			BoardPosition vectorToGoal = headPostion.vectorTo(getBoard().getGoalPosition());
+			return headPostion.plus(vectorToGoal);
+		}
 	}
+
 
 	boolean canMove() {
 		return getBoard().getGoalPosition() != null;
@@ -39,17 +47,21 @@ public class AutomaticSnake extends Snake {
 	@Override
 	public void run() {
 		doInitialPositioning();
+		boolean isRandomMove = false;
 		System.err.println(super.toString() + " initial size:" + cells.size());
-		try {
+
 			// cells.getLast().request(this); Prof did this
 			while (canMove()) {
+				try {
 				// System.err.println(toString() + " trying to move to " + nextMove());
-				move(getBoard().getCell(nextMove()));
+				move(getBoard().getCell(nextMove(isRandomMove)));
+				isRandomMove = false;
 				sleep(120);
+				} catch (InterruptedException e) {
+					isRandomMove = true;
+				}
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 }

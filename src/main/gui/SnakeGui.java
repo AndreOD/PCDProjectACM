@@ -13,7 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import main.environment.Board;
+import main.environment.BoardPosition;
 import main.environment.LocalBoard;
+import main.game.Snake;
+
 /**
  *  Class to create and configure GUI.
  *  Only the listener to the button should be edited, see TODO below.
@@ -50,7 +53,13 @@ public class SnakeGui implements Observer {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				System.out.println("Teste");
+				for(int i =  0 ; i < Board.NUM_ROWS ; i++){
+					for (int j = 0 ; j < Board.NUM_COLUMNS ; j++){
+						Snake snake = board.getCell( new BoardPosition(i,j)).getOcuppyingSnake();
+						if (snake != null) snake.interrupt();
+					}
+				}
 			}
 				
 		});
