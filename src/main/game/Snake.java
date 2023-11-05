@@ -2,6 +2,7 @@ package main.game;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.function.Predicate;
 
 import main.environment.LocalBoard;
 import main.gui.SnakeGui;
@@ -59,8 +60,25 @@ public abstract class Snake extends Thread implements Serializable {
 		return coordinates;
 	}
 
+	public LinkedList<BoardPosition> getPath(Predicate<Cell> filtro) {
+		LinkedList<BoardPosition> coordinates = new LinkedList<BoardPosition>();
+		for (Cell cell : cells)
+			if (filtro.test(cell))
+				coordinates.add(cell.getPosition());
+
+		return coordinates;
+	}
+
 	public Board getBoard() {
 		return board;
+	}
+
+	protected BoardPosition getHeadPosition() {
+		return cells.getLast().getPosition();
+	}
+
+	protected Cell getHeadCell() {
+		return cells.getLast();
 	}
 
 	// Move
@@ -96,8 +114,6 @@ public abstract class Snake extends Thread implements Serializable {
 		leftToIncrease += g.captureGoal();
 		cell.removeGoal();
 
-
-		//int valueToIncrease = g.captureGoal();// TODO Increase Snake
 	}
 
 	// Auxiliar Functions

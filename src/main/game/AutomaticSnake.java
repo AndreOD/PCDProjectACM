@@ -22,22 +22,28 @@ public class AutomaticSnake extends Snake {
 	// Move
 	/**
 	 * Calculates next position of snake's head.
-	 * Does not verify if next position is occupied by any obstacles.
+	 * Verifies if next position equals the last position that blocked the Snake or
+	 * if next position equals is a part of the Snake.
+	 * Does not verify if next position is occupied by any Obstacles.
 	 *
 	 * @return {@code BoardPosition} - new Position closer to Goal
 	 */
 	BoardPosition nextMove(boolean random) {
-		if (random){
-			int randomDirectionIndex = ThreadLocalRandom.current().nextInt(4);
-			return getBoard().getNeighboringPositions(getCells().getLast()).get(randomDirectionIndex);
+		BoardPosition positionToGoal = getHeadPosition().plus(getHeadPosition().vectorTo(getBoard().getGoalPosition()));
+		List<BoardPosition> neighboringPositions = getBoard().getNeighboringPositions(getHeadCell());
+		List<BoardPosition> snakePositions = getPath(cell -> neighboringPositions.contains(cell.getPosition()));
 
-		}else {
-			BoardPosition headPostion = cells.getLast().getPosition();
-			BoardPosition vectorToGoal = headPostion.vectorTo(getBoard().getGoalPosition());
-			return headPostion.plus(vectorToGoal);
-		}
+		if (!random && !snakePositions.contains(positionToGoal))
+			return positionToGoal;
+			
+		BoardPosition randPosition = neighboringPositions.get(ThreadLocalRandom.current().nextInt(neighboringPositions.size()));
+
+		while (snakePositions.contains(randPosition) || randPosition.equals(positionToGoal))
+			randPosition = neighboringPositions.get(ThreadLocalRandom.current().nextInt(neighboringPositions.size()));
+
+		return randPosition;
+
 	}
-
 
 	boolean canMove() {
 		return getBoard().getGoalPosition() != null;
@@ -50,17 +56,17 @@ public class AutomaticSnake extends Snake {
 		boolean isRandomMove = false;
 		System.err.println(super.toString() + " initial size:" + cells.size());
 
-			// cells.getLast().request(this); Prof did this
-			while (canMove()) {
-				try {
+		// cells.getLast().request(this); Prof did this
+		while (canMove()) {
+			try {
 				// System.err.println(toString() + " trying to move to " + nextMove());
 				move(getBoard().getCell(nextMove(isRandomMove)));
 				isRandomMove = false;
 				sleep(120);
-				} catch (InterruptedException e) {
-					isRandomMove = true;
-				}
+			} catch (InterruptedException e) {
+				isRandomMove = true;
 			}
+		}
 
 	}
 
