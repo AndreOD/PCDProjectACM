@@ -19,18 +19,28 @@ public class Goal extends GameElement {
 	}
 
 	// Setters
+	/**
+	 * If Goal did not reach the limit increments value of the Goal, otherwise finishes the game.
+	 * 
+	 * @throws InterruptedException used to cancel new Goal in the Board in captureGoal() method.
+	 * 
+	 * @see #captureGoal()
+	 */
 	public void incrementValue() throws InterruptedException {
-		// TODO
 		if (value < MAX_VALUE)
 			value++;
-		else
-			System.exit(0);;// TODO End the Game
+		else { // Game Ends
+			board.setGoalPosition(null);
+			board.getSnakes().forEach(t -> t.interrupt());
+			throw new InterruptedException();
+		}
 	}
 
 	/**
 	 * Increments value of Goal and change position of Goal.
 	 * <p>
 	 * Does not remove current Goal in Cell.
+	 * 
 	 * @return {@code value} of the Goal when is catched.
 	 * 
 	 * @see main.environment.Cell#removeGoal() removeGoal()
@@ -40,7 +50,6 @@ public class Goal extends GameElement {
 			incrementValue();
 			board.addGameElement(this);
 		} catch (InterruptedException e) {
-			// TODO Provavelmente isto está errado ;/, será aqui para pôr o try?
 		}
 		return value - 1;
 	}

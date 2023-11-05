@@ -103,6 +103,8 @@ public abstract class Snake extends Thread implements Serializable {
 		// Repaint
 		board.setChanged();
 
+		// Interval between moves
+		sleep(Board.PLAYER_PLAY_INTERVAL);
 	}
 
 	// Capture Goal

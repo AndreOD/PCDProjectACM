@@ -22,6 +22,16 @@ public class Obstacle extends GameElement {
 
 	// Setters
 	public void move() {
-		// TODO
+		// while (remainingMoves > 0) {
+		// 	try {
+		// 		board.addGameElement(this);
+
+		// 		remainingMoves--;
+
+		// 		Thread.sleep(OBSTACLE_MOVE_INTERVAL);
+		// 	} catch (InterruptedException e) {
+		// 		// TODO
+		// 	}
+		// }
 	}
 }

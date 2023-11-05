@@ -34,7 +34,7 @@ public class LocalBoard extends Board{
 			snakes.add(snake);
 		}
 
-		addObstacles( NUM_OBSTACLES);
+		addObstacles(NUM_OBSTACLES);
 		
 		Goal goal=addGoal();
 //		System.err.println("All elements placed");
