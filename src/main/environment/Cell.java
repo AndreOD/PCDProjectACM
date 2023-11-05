@@ -53,14 +53,13 @@ public class Cell {
 	public synchronized void request(Snake snake) throws InterruptedException {
 		while (isOcupiedBySnakeOrObstacle())
 			wait(); // TODO change wait to increase performance. 
-					// TODO_Prof : coordination and mutual exclusion
 		ocuppyingSnake = snake;
 	}
 
 	public void release() {
-		// TODO
 		ocuppyingSnake = null;
 		gameElement = null;
+		// notifyAll(); TODO Com problemas
 	}
 
 	// Removes
