@@ -1,2 +1,1 @@
 Às vezes só aparece uma Snake no inicio do Jogo.(Obstáculo dá spawn na cobra)
-Durante o movimento se cobra 1 colidir com cobra 2, cobra 1 pode permanecer parada enquanto cobra 2 se movimenta.

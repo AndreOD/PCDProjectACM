@@ -56,10 +56,10 @@ public class Cell {
 		ocuppyingSnake = snake;
 	}
 
-	public void release() {
+	public synchronized void release() {
 		ocuppyingSnake = null;
 		gameElement = null;
-		// notifyAll(); TODO Com problemas
+		 notifyAll(); // Se isto for removido aparece Bug [perguntas 7]
 	}
 
 	// Removes
