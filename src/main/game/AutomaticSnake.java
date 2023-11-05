@@ -56,13 +56,11 @@ public class AutomaticSnake extends Snake {
 		boolean isRandomMove = false;
 		System.err.println(super.toString() + " initial size:" + cells.size());
 
-		// cells.getLast().request(this); Prof did this
 		while (canMove()) {
 			try {
 				// System.err.println(toString() + " trying to move to " + nextMove());
 				move(getBoard().getCell(nextMove(isRandomMove)));
 				isRandomMove = false;
-				sleep(120);
 			} catch (InterruptedException e) {
 				isRandomMove = true;
 			}
