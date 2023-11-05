@@ -5,7 +5,7 @@ import main.environment.LocalBoard;
 public class ObstacleMover extends Thread {
 	private Obstacle obstacle;
 	private LocalBoard board;
-	
+
 	// Constructors
 	public ObstacleMover(Obstacle obstacle, LocalBoard board) {
 		super();
@@ -16,6 +16,6 @@ public class ObstacleMover extends Thread {
 	// Thread Class
 	@Override
 	public void run() {
-		// TODO
+		// obstacle.move();
 	}
 }
