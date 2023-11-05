@@ -19,6 +19,13 @@ public class Goal extends GameElement {
 	}
 
 	// Setters
+	/**
+	 * If Goal did not reach the limit increments value of the Goal, otherwise finishes the game.
+	 * 
+	 * @throws InterruptedException used to cancel new Goal in the Board in captureGoal() method.
+	 * 
+	 * @see #captureGoal()
+	 */
 	public void incrementValue() throws InterruptedException {
 		if (value < MAX_VALUE)
 			value++;
@@ -43,7 +50,6 @@ public class Goal extends GameElement {
 			incrementValue();
 			board.addGameElement(this);
 		} catch (InterruptedException e) {
-			// TODO Provavelmente isto está errado ;/, será aqui para pôr o try?
 		}
 		return value - 1;
 	}
