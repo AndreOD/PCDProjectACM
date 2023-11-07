@@ -21,7 +21,7 @@ import main.environment.Cell;
 public abstract class Snake extends Thread implements Serializable {
 	private static final int DELTA_SIZE = 10;
 	protected LinkedList<Cell> cells = new LinkedList<Cell>();
-	protected int size = 5;
+	protected int size = 1;
 	private int id;
 	private Board board;
 
@@ -115,6 +115,9 @@ public abstract class Snake extends Thread implements Serializable {
 		Goal g = cell.getGoal();
 		leftToIncrease += g.captureGoal();
 		cell.removeGoal();
+
+		// Update Snake Size
+		size += leftToIncrease;
 
 	}
 
