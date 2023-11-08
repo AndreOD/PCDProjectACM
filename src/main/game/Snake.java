@@ -112,8 +112,8 @@ public abstract class Snake extends Thread implements Serializable {
 		if (!cell.isOcupiedByGoal())
 			return;
 
-		Goal g = cell.getGoal();
-		leftToIncrease += g.captureGoal();
+		Goal goal = cell.getGoal();
+		leftToIncrease += goal.captureGoal();
 		cell.removeGoal();
 
 		// Update Snake Size
