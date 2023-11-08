@@ -33,6 +33,7 @@ public abstract class Board extends Observable {
 	}
 
 	// Getters
+	}
 	public Cell getCell(BoardPosition cellCoord) {
 		return cells[cellCoord.x][cellCoord.y];
 	}

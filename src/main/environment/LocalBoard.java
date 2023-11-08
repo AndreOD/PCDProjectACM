@@ -5,15 +5,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
-import main.game.GameElement;
-import main.game.Goal;
-import main.game.Obstacle;
-import main.game.Server;
-import main.game.Snake;
-import main.game.AutomaticSnake;
+import main.concurrent.ThreadPool;
+import main.game.*;
 
 /** Class representing the state of a game running locally
  * 
@@ -35,17 +33,23 @@ public class LocalBoard extends Board{
 		}
 
 		addObstacles(NUM_OBSTACLES);
-		
 		Goal goal=addGoal();
-//		System.err.println("All elements placed");
 	}
 
 	// Init
 	public void init() {
 		for(Snake s:snakes)
 			s.start();
-		// TODO: launch other threads
+
 		setChanged();
+
+		// ThreadingPoolWorking for ObstacleMovers
+		List<Runnable> tasks = new LinkedList<>();
+		getObstacles().forEach(obstacle -> tasks.add(new ObstacleMover(obstacle,this)));
+		ThreadPool threadPool = new ThreadPool(tasks,NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+
+		// TODO: launch other threads
+
 	}
 
 	// Board Class
