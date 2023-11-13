@@ -1,14 +1,14 @@
 package main.game;
 
+import main.environment.Cell;
 import main.environment.LocalBoard;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ObstacleMover implements Runnable {
 	private Obstacle obstacle;
 	private LocalBoard board;
-	private static final int MOVING_OBSTACLES_NUMBER = 3;
+	private static final int OBSTACLE_MOVE_INTERVAL = 400;
+
 
 	// Constructors
 	public ObstacleMover(Obstacle obstacle, LocalBoard board) {
@@ -17,13 +17,34 @@ public class ObstacleMover implements Runnable {
 		this.board = board;
 	}
 
-	public ObstacleMover(LocalBoard board) {
-		super();
-		this.board = board;
-	}
 	// Thread Class
 	@Override
 	public void run() {
-		obstacle.move();
+		try {
+			while (obstacle.getRemainingMoves() > 0) {
+				removeObstacle();
+				obstacle.decrementRemainingMoves();
+				addObstacle();
+
+				Thread.sleep(OBSTACLE_MOVE_INTERVAL);
+			}
+		} catch (InterruptedException e) {}
+
 	}
+
+	private void addObstacle(){
+		board.addGameElement(obstacle);
+		board.setChanged();
+	}
+
+	private void removeObstacle() {
+		for (Cell[] list : board.getCells()) {
+			for (Cell c : list) {
+				if (c.getObstacle() == obstacle) {
+					c.removeObstacle();
+					return;
+				}}}
+	}
+
+
 }
