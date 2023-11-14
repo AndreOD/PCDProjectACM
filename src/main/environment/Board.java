@@ -81,12 +81,8 @@ public abstract class Board extends Observable {
 		boolean placed = false;
 		while (!placed) {
 			BoardPosition pos = getRandomPosition();
-			if (!getCell(pos).isOcupiedBySnakeOrObstacle() && !getCell(pos).isOcupiedByGoal()) {
-				getCell(pos).setGameElement(gameElement);
-				if (gameElement instanceof Goal) {
-					setGoalPosition(pos);
-					// System.out.println("Goal placed at:"+pos);
-				}
+			if ( getCell(pos).setGameElement(gameElement)) {  //Cell.setGameElement returns a boolean if cell is empty
+				if (gameElement instanceof Goal) setGoalPosition(pos);
 				placed = true;
 			}
 		}
