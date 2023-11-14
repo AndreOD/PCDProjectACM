@@ -48,9 +48,11 @@ public class Cell {
     }
 
     // Setters
-    public void setGameElement(GameElement element) {
-        // TODO coordination and mutual exclusion
+    public synchronized boolean setGameElement(GameElement element) {
+        if(isOcupiedBySnakeOrObstacle() || isOcupiedByGoal())
+            return false;
         gameElement = element;
+        return true;
     }
 
     public synchronized void request(Snake snake) throws InterruptedException {
