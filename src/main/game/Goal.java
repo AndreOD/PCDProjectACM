@@ -26,15 +26,7 @@ public class Goal extends GameElement {
 	 * 
 	 * @see #captureGoal()
 	 */
-	public void incrementValue() throws InterruptedException {
-		if (value < MAX_VALUE)
-			value++;
-		else { // Game Ends
-			board.setGoalPosition(null);
-			board.getSnakes().forEach(t -> t.interrupt());
-			throw new InterruptedException();
-		}
-	}
+	public void incrementValue() {value++;}
 
 	/**
 	 * Increments value of Goal and change position of Goal.
@@ -46,11 +38,14 @@ public class Goal extends GameElement {
 	 * @see main.environment.Cell#removeGoal() removeGoal()
 	 */
 	public int captureGoal() {
-		try {
+		if (value < MAX_VALUE) {
 			incrementValue();
 			board.addGameElement(this);
-		} catch (InterruptedException e) {
+		} else { // Game Ends
+			board.setGoalPosition(null);
+			board.getSnakes().forEach(t -> t.interrupt());
 		}
+
 		return value - 1;
 	}
 }
