@@ -14,22 +14,9 @@ public class ThreadPool {
 
     private List<WorkerThread> workers = new ArrayList<>();
 
-    /***
-     * Construtor that receives a blockingQueue
-     *
-     * @param blockingQueue
-     * @param numberOfWorkers
-     */
+    private boolean stoped = false;
 
 
-    public ThreadPool(BlockingQueue<Runnable> blockingQueue, int numberOfWorkers) {
-        this.blockingQueue = blockingQueue;
-        for (int i = 0 ; i < numberOfWorkers ; i++){
-            WorkerThread worker = new WorkerThread();
-            workers.add(worker);
-            worker.start();
-        }
-    }
 
     /***
      * Construtor that receives Runnable List used to create a new BlockingQueue
@@ -51,27 +38,50 @@ public class ThreadPool {
         }
     }
 
+    public ThreadPool(int numberOfWorkers) {
+        blockingQueue = new LinkedBlockingQueue<>();
+
+        for (int i = 0 ; i < numberOfWorkers ; i++){
+            WorkerThread worker = new WorkerThread();
+            workers.add(worker);
+            worker.start();
+        }
+    }
+
+    public void interruptAll(){
+        stoped = true;
+        for (WorkerThread worker : workers){ worker.interrupt();}
+    }
+
+
+    public void submit(Runnable runnable){
+        blockingQueue.add(runnable);
+
+    }
 
 
     class WorkerThread extends Thread implements Executor {
+
+
         @Override
         public void run() {
             try {
-                while (!blockingQueue.isEmpty()) {
-                    Runnable obstacleMover = blockingQueue.take();
-                    execute(obstacleMover);
+                while (!stoped) {
+                    Runnable runnable = blockingQueue.take();
+                    execute(runnable);
                 }
-            } catch (InterruptedException e) {
-            }
+            } catch (InterruptedException e) { }
         }
 
         @Override
-        public void execute(Runnable command)  {
-            Thread task = new Thread(command);
+        public void execute(Runnable runnable)   {
+            Thread task = new Thread(runnable);
             task.start();
             try {
                 task.join();
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                task.interrupt();
+            }
         }
     }
 

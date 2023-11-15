@@ -44,9 +44,9 @@ public class LocalBoard extends Board{
 		setChanged();
 
 		// ThreadingPoolWorking for ObstacleMovers
-		List<Runnable> tasks = new LinkedList<>();
-		getObstacles().forEach(obstacle -> tasks.add(new ObstacleMover(obstacle,this)));
-		ThreadPool threadPool = new ThreadPool(tasks,NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+		ThreadPool threadPool = new ThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+		getObstacles().forEach(obstacle -> threadPool.submit(new ObstacleMover(obstacle,this)));
+
 
 		// TODO: launch other threads
 
