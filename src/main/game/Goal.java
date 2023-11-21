@@ -44,6 +44,8 @@ public class Goal extends GameElement {
 		} else { // Game Ends
 			board.setGoalPosition(null);
 			board.getSnakes().forEach(t -> t.interrupt());
+			if (board  instanceof LocalBoard)
+				((LocalBoard)board).endThreadPool();
 		}
 
 		return value - 1;
