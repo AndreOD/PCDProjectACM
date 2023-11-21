@@ -24,6 +24,8 @@ public class LocalBoard extends Board{
 	private static final int NUM_OBSTACLES = 25;
 	private static final int NUM_SIMULTANEOUS_MOVING_OBSTACLES = 3;
 
+	private ThreadPool threadPool;
+
 	// Construtors
 	public LocalBoard() {
 
@@ -44,12 +46,16 @@ public class LocalBoard extends Board{
 		setChanged();
 
 		// ThreadingPoolWorking for ObstacleMovers
-		ThreadPool threadPool = new ThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+		threadPool = new ThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
 		getObstacles().forEach(obstacle -> threadPool.submit(new ObstacleMover(obstacle,this)));
 
 
 		// TODO: launch other threads
 
+	}
+
+	public void endThreadPool(){
+		threadPool.interruptAll();
 	}
 
 	// Board Class

@@ -17,27 +17,11 @@ public class ThreadPool {
     private boolean stoped = false;
 
 
-
     /***
-     * Construtor that receives Runnable List used to create a new BlockingQueue
-     * Usefull for pre-prepared list of tasks
+     * Construtor that receives numberOfWorkers
      * Used in LocalBoard init()
-     * @param tasks
      * @param numberOfWorkers
      */
-
-    public ThreadPool(List<Runnable> tasks, int numberOfWorkers) {
-        blockingQueue = new LinkedBlockingQueue<>();
-        for(Runnable task : tasks)
-            blockingQueue.add(task);
-
-        for (int i = 0 ; i < numberOfWorkers ; i++){
-            WorkerThread worker = new WorkerThread();
-            workers.add(worker);
-            worker.start();
-        }
-    }
-
     public ThreadPool(int numberOfWorkers) {
         blockingQueue = new LinkedBlockingQueue<>();
 
@@ -58,6 +42,8 @@ public class ThreadPool {
         blockingQueue.add(runnable);
 
     }
+
+
 
 
     class WorkerThread extends Thread implements Executor {
@@ -84,6 +70,19 @@ public class ThreadPool {
             }
         }
     }
+
+
+//    public ThreadPool(List<Runnable> tasks, int numberOfWorkers) {
+//        blockingQueue = new LinkedBlockingQueue<>();
+//        for(Runnable task : tasks)
+//            blockingQueue.add(task);
+//
+//        for (int i = 0 ; i < numberOfWorkers ; i++){
+//            WorkerThread worker = new WorkerThread();
+//            workers.add(worker);
+//            worker.start();
+//        }
+//    }
 
 
 }
