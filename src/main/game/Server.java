@@ -3,6 +3,8 @@ package main.game;
 import main.environment.Board;
 import main.environment.BoardPosition;
 import main.environment.LocalBoard;
+import main.gui.SnakeGui;
+import main.remote.GameState;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -25,8 +27,8 @@ public class Server {
 
     public void startServer(){
         try{
-            initBoardAfterAWhile();
             serverSocket = new ServerSocket(PORT,10);
+            initBoardAfterAWhile();
             waitForConnections();
         }catch (IOException e){
 
@@ -41,7 +43,8 @@ public class Server {
         new Thread(() -> {
             try {
                 Thread.sleep(MILLISECONDS_TO_JOIN_BEFORE_GAME);
-                board.init();
+                SnakeGui localGui = new SnakeGui(board,600,0);
+                localGui.init();
             } catch (InterruptedException e) {}
         }).start();
     }
@@ -85,9 +88,8 @@ public class Server {
 
         private void sendBoard() throws IOException, InterruptedException {
             while (true){
-                System.out.println("Sending to client " + id);
+                out.reset();
                 out.writeObject(board);
-                System.out.println("Sended!");
                 sleep(Board.REMOTE_REFRESH_INTERVAL);
             }
         }

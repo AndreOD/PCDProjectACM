@@ -13,13 +13,13 @@ import main.game.Snake;
 
 public abstract class Board extends Observable implements Serializable {
 	protected Cell[][] cells;
-	private BoardPosition goalPosition;
+	private transient BoardPosition goalPosition;
 	public static final long PLAYER_PLAY_INTERVAL = 100;
 	public static final long REMOTE_REFRESH_INTERVAL = 200;
 	public static final int NUM_COLUMNS = 30;
 	public static final int NUM_ROWS = 30;
 	protected LinkedList<Snake> snakes = new LinkedList<Snake>();
-	private LinkedList<Obstacle> obstacles = new LinkedList<Obstacle>();
+	private transient LinkedList<Obstacle> obstacles = new LinkedList<Obstacle>();
 	protected boolean isFinished;
 
 	// Constructors
@@ -76,6 +76,10 @@ public abstract class Board extends Observable implements Serializable {
 	// Setters
 	public void setGoalPosition(BoardPosition goalPosition) {
 		this.goalPosition = goalPosition;
+	}
+
+	public void setFinished(boolean finished) {
+		isFinished = finished;
 	}
 
 	public void setCells(Cell[][] cells){
@@ -145,5 +149,9 @@ public abstract class Board extends Observable implements Serializable {
 	public void setChanged() {
 		super.setChanged();
 		notifyObservers();
+	}
+
+	public boolean isFinished() {
+		return isFinished;
 	}
 }

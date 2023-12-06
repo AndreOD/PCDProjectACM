@@ -2,7 +2,9 @@ package main.remote;
 
 
 import main.environment.Board;
+import main.environment.BoardPosition;
 import main.environment.Cell;
+import main.environment.LocalBoard;
 import main.game.Server;
 import main.gui.SnakeGui;
 
@@ -27,37 +29,34 @@ public class Client {
     private int serverPort;
     private InetAddress serverAddress;
     private RemoteBoard board = new RemoteBoard();
+    private RemoteGui gui;
+
+    private PrintWriter outputStream; //Enviar keys por canais de texto
+    private ObjectInputStream inputStream;
+    private Socket connection;
 
 
-	public Client(InetAddress serverAddress, int serverPort) {
+
+    public Client(InetAddress serverAddress, int serverPort) {
 		this.serverPort = serverPort;
 		this.serverAddress = serverAddress;
-		startClientGui();
-		new ClientConnectionHandler().start();
+		gui = new RemoteGui(board);
+		runClient();
 	}
 
 	private void startClientGui() {
-		SnakeGui clientGui = new SnakeGui(board,600,0);
-		clientGui.init();
-		//TODO
+		gui.startGui();
 	}
 
-    private void updateBoard(){
-        //TODO
-        board.setChanged();
-    }
 
-	private class ClientConnectionHandler extends Thread { //Alterar
-        private PrintWriter outputStream; //Enviar keys por canais de texto
-        private ObjectInputStream inputStream;
-        private Socket connection;
 
-        @Override
-        public void run() {
+
+
+        public void runClient() {
             try {
                 connection = new Socket(serverAddress, serverPort);
                 getStreams();
-                System.out.println("h2");
+                startClientGui();
                 getBoardUpdates();
             } catch (IOException | ClassNotFoundException e) {
             } finally {
@@ -75,13 +74,10 @@ public class Client {
 
         private void getBoardUpdates() throws IOException, ClassNotFoundException {
             while (true) {
-                Board newboard = (Board) inputStream.readObject();
-                board.setCells(newboard.getCells());
-                board.setSnakes(newboard.getSnakes());
+                Board updatedBoard = (Board) inputStream.readObject();
+                board.setCells(updatedBoard.getCells());
+                board.setSnakes(updatedBoard.getSnakes());
                 board.setChanged();
-                System.out.println("Recebido");
-
-				//TODO
             }
         }
 
@@ -90,7 +86,6 @@ public class Client {
             if (outputStream != null) outputStream.close();
             connection.close();
         }
-    }
 
 
     public static void main(String[] args) throws UnknownHostException {

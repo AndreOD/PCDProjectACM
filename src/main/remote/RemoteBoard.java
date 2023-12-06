@@ -1,5 +1,6 @@
 package main.remote;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.PrintWriter;
@@ -20,23 +21,53 @@ import main.game.Snake;
  *
  */
 public class RemoteBoard extends Board{
+	//KeyCode that will be sent to server
+	private int keyCodeToSend = -1;
+
+	//KeyCode sent Before the next one, determined to see if u need to resent the sameKeycode
+	private int lastCode = -1;
+
+	//Used to check if the user has pressed another key, turns to true in init and at key release
+	private boolean canSwitch = false;
 	
 	@Override
 	public void handleKeyPress(int keyCode) {
-		//TODO
+		if (!canSwitch) return;
+		lastCode = keyCodeToSend;
+		keyCodeToSend = keyCode;
+		canSwitch = false;
 	}
 
 	@Override
 	public void handleKeyRelease() {
-		// TODO
+		canSwitch = true;
 	}
 
 	@Override
 	public void init() {
-		// TODO 		
+		canSwitch = true;
+	}
+
+	/**
+	 * Client will send the Characters U(UP),D(DOWN),R(RIGHT),L(LEFT) to the server
+	 * The Char 'N' is return when the client should not send anything to server
+	 **/
+	public char getCharToSend(){
+		if(keyCodeToSend == lastCode) return 'N';
+		switch (keyCodeToSend){
+			case KeyEvent.VK_LEFT:
+				return 'L';
+			case KeyEvent.VK_UP:
+				return 'U';
+			case KeyEvent.VK_RIGHT:
+				return 'R';
+			case KeyEvent.VK_DOWN:
+				return 'D';
+			default:
+				return 'N';
+		}
 	}
 
 
-	
 
 }
