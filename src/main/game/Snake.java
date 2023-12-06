@@ -23,7 +23,7 @@ public abstract class Snake extends Thread implements Serializable {
 	protected LinkedList<Cell> cells = new LinkedList<Cell>();
 	protected int size = 1;
 	private int id;
-	private Board board;
+	private transient Board board;
 
 	private int leftToIncrease = 0;
 

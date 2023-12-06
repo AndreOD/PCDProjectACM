@@ -4,17 +4,14 @@ import java.io.Serializable;
 
 import javax.sound.midi.SysexMessage;
 
-import main.game.GameElement;
-import main.game.Goal;
-import main.game.Obstacle;
-import main.game.Snake;
+import main.game.*;
 
 /**
  * Main class for game representation.
  *
  * @author luismota
  */
-public class Cell {
+public class Cell implements Serializable {
     private BoardPosition position;
     private Snake ocuppyingSnake = null;
     private GameElement gameElement = null;
