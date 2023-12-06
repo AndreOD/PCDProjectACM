@@ -6,7 +6,7 @@ import main.environment.Board;
   * @author luismota
   *
   */
-public abstract class HumanSnake extends Snake {
+public class HumanSnake extends Snake {
 	
   // Constructors
 	public HumanSnake(int id,Board board) {

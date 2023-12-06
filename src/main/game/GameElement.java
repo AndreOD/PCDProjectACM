@@ -1,6 +1,8 @@
 package main.game;
 
 
-public abstract class GameElement{
+import java.io.Serializable;
+
+public abstract class GameElement implements Serializable {
 
 }

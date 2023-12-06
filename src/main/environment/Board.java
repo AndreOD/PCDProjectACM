@@ -1,5 +1,6 @@
 package main.environment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +11,7 @@ import main.game.Goal;
 import main.game.Obstacle;
 import main.game.Snake;
 
-public abstract class Board extends Observable {
+public abstract class Board extends Observable implements Serializable {
 	protected Cell[][] cells;
 	private BoardPosition goalPosition;
 	public static final long PLAYER_PLAY_INTERVAL = 100;
@@ -75,6 +76,14 @@ public abstract class Board extends Observable {
 	// Setters
 	public void setGoalPosition(BoardPosition goalPosition) {
 		this.goalPosition = goalPosition;
+	}
+
+	public void setCells(Cell[][] cells){
+		this.cells = cells;
+	}
+
+	public void setSnakes(LinkedList<Snake> snakes) {
+		this.snakes = snakes;
 	}
 
 	public void addGameElement(GameElement gameElement) {
