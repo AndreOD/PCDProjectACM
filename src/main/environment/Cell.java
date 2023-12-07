@@ -52,10 +52,13 @@ public class Cell implements Serializable {
         return true;
     }
 
-    public synchronized void request(Snake snake) throws InterruptedException {
-        while (isOcupiedBySnakeOrObstacle())
+    public synchronized boolean request(Snake snake) throws InterruptedException {
+        if (snake instanceof HumanSnake && isOcupiedBySnakeOrObstacle())
+            return false;
+        while (snake instanceof AutomaticSnake && isOcupiedBySnakeOrObstacle())
             wait(); // TODO change wait to increase performance.
         ocuppyingSnake = snake;
+        return true;
     }
 
     public synchronized void release() {

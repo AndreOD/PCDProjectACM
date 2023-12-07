@@ -61,7 +61,10 @@ public class Server {
         private Socket connection;
         private ObjectOutputStream out;
         private int id;
-        private Scanner in;//TODO
+        private Thread inputReader;
+        private Scanner in;
+
+        private HumanSnake snake; //snake controlled by this client
 
         ServerConnectionHandler(Socket connection){
             this.id = IDGENERATOR.getAndIncrement();
@@ -73,17 +76,30 @@ public class Server {
             try{
                 System.out.println("New Client number " +id+" Connected");
                 getStreams();
+                createSnake();
                 sendBoard();
-                //TODO GETTING KEYINPUT
             }catch (IOException | InterruptedException e){
-                e.printStackTrace();
             }finally {
                 try {
                     closeConnections();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                } catch (IOException e) {}
             }
+        }
+
+        private void createSnake() {
+            snake = new HumanSnake(id,board);
+            board.addSnake(snake);
+            snake.start();
+            getKeyBoardInput(snake);
+        }
+
+        private void getKeyBoardInput(HumanSnake snake) {
+            inputReader = new Thread(()->{
+                while (!interrupted()){
+                    if (in.hasNext())  snake.setDirection(in.nextLine());
+                }
+            });
+            inputReader.start();
         }
 
         private void sendBoard() throws IOException, InterruptedException {
@@ -100,8 +116,10 @@ public class Server {
 
         }
         private void closeConnections() throws IOException {
-            if (in != null) in.close();
+            inputReader.interrupt();
+            System.err.println("Client " + id + " has Disconnected! Closing Socket!");
             if (out != null) out.close();
+            if (in != null ) in.close();
             connection.close();
         }
     }

@@ -89,7 +89,7 @@ public abstract class Snake extends Thread implements Serializable {
 	 */
 	protected void move(Cell cell) throws InterruptedException {
 		// Add Snake's Head
-		cell.request(this);
+		if( !cell.request(this) ) return; //Happens when HumanSnake tries to move to an ocupied Position
 		cells.add(cell);
 
 		if (leftToIncrease > 0)
