@@ -47,7 +47,7 @@ public class AutomaticSnake extends Snake {
 
 	boolean canMove() {
 		//return getBoard().getGoalPosition() != null;
-		return getBoard().isFinished();
+		return !getBoard().isFinished();
 	}
 
 	// Thread Class

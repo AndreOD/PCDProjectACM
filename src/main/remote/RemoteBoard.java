@@ -21,20 +21,21 @@ import main.game.Snake;
  *
  */
 public class RemoteBoard extends Board{
-	//KeyCode that will be sent to server
-	private int keyCodeToSend = -1;
 
 	//KeyCode sent Before the next one, determined to see if u need to resent the sameKeycode
 	private int lastCode = -1;
 
 	//Used to check if the user has pressed another key, turns to true in init and at key release
 	private boolean canSwitch = false;
+
+	private PrintWriter keyOutputStream;
 	
 	@Override
 	public void handleKeyPress(int keyCode) {
-		if (!canSwitch) return;
-		lastCode = keyCodeToSend;
-		keyCodeToSend = keyCode;
+		if (!canSwitch || lastCode == keyCode) return;
+		keyOutputStream.println(getCharToSend(keyCode));
+		System.out.println(getCharToSend(keyCode));
+		lastCode = keyCode;
 		canSwitch = false;
 	}
 
@@ -48,11 +49,16 @@ public class RemoteBoard extends Board{
 		canSwitch = true;
 	}
 
+
+	public void setKeyOutputStream(PrintWriter outputStream){
+		keyOutputStream = outputStream;
+	}
+
 	/**
 	 * Client will send the Characters U(UP),D(DOWN),R(RIGHT),L(LEFT) to the server
 	 * The Char 'N' is return when the client should not send anything to server
 	 **/
-	public char getCharToSend(){
+	public char getCharToSend(int keyCodeToSend){
 		if(keyCodeToSend == lastCode) return 'N';
 		switch (keyCodeToSend){
 			case KeyEvent.VK_LEFT:
