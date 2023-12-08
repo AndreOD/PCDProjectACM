@@ -54,6 +54,9 @@ public class AutomaticSnake extends Snake {
 	@Override
 	public void run() {
 		doInitialPositioning();
+		try {
+			sleep(Server.MILLISECONDS_TO_JOIN_BEFORE_GAME);
+		} catch (InterruptedException e) {}
 		boolean isRandomMove = false;
 		System.err.println(super.toString() + " initial size:" + cells.size());
 

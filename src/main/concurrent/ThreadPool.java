@@ -1,6 +1,7 @@
 package main.concurrent;
 
 import main.game.ObstacleMover;
+import main.game.Server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +53,7 @@ public class ThreadPool {
         @Override
         public void run() {
             try {
+                sleep(Server.MILLISECONDS_TO_JOIN_BEFORE_GAME);
                 while (!stoped) {
                     Runnable runnable = blockingQueue.take();
                     execute(runnable);

@@ -1,17 +1,13 @@
 package main.game;
 
 import main.environment.Board;
-import main.environment.BoardPosition;
 import main.environment.LocalBoard;
 import main.gui.SnakeGui;
-import main.remote.GameState;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -28,7 +24,7 @@ public class Server {
     public void startServer(){
         try{
             serverSocket = new ServerSocket(PORT,10);
-            initBoardAfterAWhile();
+            initBoard();
             waitForConnections();
         }catch (IOException e){
 
@@ -39,14 +35,10 @@ public class Server {
         }
     }
 
-    private void initBoardAfterAWhile() {
-        new Thread(() -> {
-            try {
-                Thread.sleep(MILLISECONDS_TO_JOIN_BEFORE_GAME);
-                SnakeGui localGui = new SnakeGui(board,600,0);
-                localGui.init();
-            } catch (InterruptedException e) {}
-        }).start();
+    private void initBoard() {
+        SnakeGui localGui = new SnakeGui(board, 600, 0);
+        localGui.init();
+
     }
 
     private void waitForConnections() throws IOException {
@@ -58,11 +50,11 @@ public class Server {
 
     private class ServerConnectionHandler extends Thread{
         private static AtomicInteger IDGENERATOR = new AtomicInteger(0);
+        private int id;
         private Socket connection;
         private ObjectOutputStream out;
-        private int id;
-        private Thread inputReader;
         private Scanner in;
+        private Thread inputReader;
 
         private HumanSnake snake; //snake controlled by this client
 
@@ -87,7 +79,7 @@ public class Server {
         }
 
         private void createSnake() {
-            snake = new HumanSnake(id,board);
+            snake = new HumanSnake(id,board,in);
             board.addSnake(snake);
             snake.start();
             getKeyBoardInput(snake);
@@ -116,7 +108,7 @@ public class Server {
 
         }
         private void closeConnections() throws IOException {
-            inputReader.interrupt();
+            //inputReader.interrupt();
             System.err.println("Client " + id + " has Disconnected! Closing Socket!");
             if (out != null) out.close();
             if (in != null ) in.close();

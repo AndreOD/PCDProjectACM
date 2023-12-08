@@ -14,8 +14,6 @@ public class RemoteGui implements Observer {
     private JFrame frame;
     private BoardComponent boardGui;
     private RemoteBoard board;
-    private int id;
-
 
     public RemoteGui(RemoteBoard board) {
         this.board = board;
@@ -23,7 +21,7 @@ public class RemoteGui implements Observer {
     }
 
     private void setupFrame() {
-        frame = new JFrame("Remote Cliente SnakeGame for user "+ id);
+        frame = new JFrame("Remote Cliente SnakeGame");
         frame.setLayout(new BorderLayout());
         boardGui = new BoardComponent(board);
         boardGui.setPreferredSize(new Dimension(SnakeGui.BOARD_WIDTH, SnakeGui.BOARD_HEIGHT));
