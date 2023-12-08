@@ -96,8 +96,8 @@ public class Client {
 
 
     public static void main(String[] args) throws UnknownHostException {
-        InetAddress serverAddress = InetAddress.getByName(args[0]);
-        Integer port = Integer.parseInt(args[1]);
+        InetAddress serverAddress = InetAddress.getByName("localhost");
+        Integer port = 12345;
 
         Client client = new Client(serverAddress, port);
         //TODO
