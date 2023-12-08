@@ -43,16 +43,13 @@ public class Client {
         runClient();
     }
 
-    private void startClientGui() {
-        gui.startGui();
-    }
 
 
     public void runClient() {
         try {
             connection = new Socket(serverAddress, serverPort);
             getStreams();
-            startClientGui();
+            getBoardFirstUpdate();
             getBoardUpdates();
         } catch (IOException | ClassNotFoundException e) {
         } finally {
@@ -69,6 +66,8 @@ public class Client {
         board.setKeyOutputStream(outputStream);
     }
 
+
+
     private void getBoardUpdates() throws IOException, ClassNotFoundException {
         Board updatedBoard;
         do{
@@ -80,7 +79,16 @@ public class Client {
 
     }
 
+    private void getBoardFirstUpdate() throws IOException, ClassNotFoundException {
+        Board updatedBoard = (Board) inputStream.readObject();
+        board.setCells(updatedBoard.getCells());
+        board.setSnakes(updatedBoard.getSnakes());
+        board.setChanged();
+        gui.startGui();
+    }
+
     private void closeConnections() throws IOException {
+        System.out.println("Connection ended");
         if (inputStream != null) inputStream.close();
         if (outputStream != null) outputStream.close();
         connection.close();

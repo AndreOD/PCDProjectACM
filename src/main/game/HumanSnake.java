@@ -4,6 +4,8 @@ import main.environment.Board;
 import main.environment.BoardPosition;
 import main.environment.Direction;
 
+import java.util.Scanner;
+
 /** Class for a remote snake, controlled by a human
   * 
   * @author luismota
@@ -11,12 +13,13 @@ import main.environment.Direction;
   */
 public class HumanSnake extends Snake {
 
-	private Direction direction = Direction.NULL;
-
+	private transient Direction direction = Direction.NULL;
+	private transient Scanner in;
 
   // Constructors
-	public HumanSnake(int id,Board board) {
+	public HumanSnake(int id, Board board, Scanner in) {
 		super(id,board);
+		this.in = in;
 	}
 
 	 @Override
@@ -26,8 +29,14 @@ public class HumanSnake extends Snake {
 
 		 while (!getBoard().isFinished()) {
 			 try {
-				 // System.err.println(toString() + " trying to move to " + nextMove());
+//				 if (in.hasNext())
+//					 setDirection(in.nextLine());
 				 BoardPosition nextMove = nextMove();
+
+				 //Print do deus
+				 System.err.println(getIdentification() + " trying to move to " + nextMove);
+				 //Deus
+
 				 if (nextMove.x < 0 || nextMove.x >= Board.NUM_COLUMNS || nextMove.y < 0 || nextMove.y >= Board.NUM_ROWS )
 					 continue; //ignore move
 				 move(getBoard().getCell(nextMove()));
@@ -45,14 +54,13 @@ public class HumanSnake extends Snake {
 			case "L":
 				direction = Direction.LEFT;
 				break;
-			default:
+			case "R":
 				direction = Direction.RIGHT;
 		}
 	}
 
 	private BoardPosition nextMove(){
 		return getHeadPosition().plus(direction.getVector());
-
 	}
 
 

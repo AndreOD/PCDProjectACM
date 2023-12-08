@@ -32,9 +32,8 @@ public class RemoteBoard extends Board{
 	
 	@Override
 	public void handleKeyPress(int keyCode) {
-		if (!canSwitch || lastCode == keyCode) return;
+		if (!canSwitch || lastCode == keyCode)return;
 		keyOutputStream.println(getCharToSend(keyCode));
-		System.out.println(getCharToSend(keyCode));
 		lastCode = keyCode;
 		canSwitch = false;
 	}
@@ -59,7 +58,6 @@ public class RemoteBoard extends Board{
 	 * The Char 'N' is return when the client should not send anything to server
 	 **/
 	public char getCharToSend(int keyCodeToSend){
-		if(keyCodeToSend == lastCode) return 'N';
 		switch (keyCodeToSend){
 			case KeyEvent.VK_LEFT:
 				return 'L';

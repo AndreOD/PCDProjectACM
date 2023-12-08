@@ -93,7 +93,7 @@ public abstract class Snake extends Thread implements Serializable {
 		cells.add(cell);
 
 		if (leftToIncrease > 0)
-			leftToIncrease--; // Dont clear tail to increase
+			leftToIncrease--; // Don't clear tail to increase
 		else
 			cells.removeFirst().release(); // Clear Tail
 
