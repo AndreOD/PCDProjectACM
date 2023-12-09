@@ -30,6 +30,8 @@ public class HumanSnake extends Snake {
 		doInitialPositioning();
 		System.err.println(super.toString() + " initial size:" + cells.size());
 
+		waitForGameToStart();
+
 		while (!getBoard().isFinished()) {
 			try {
 				if (in.ready())
@@ -45,6 +47,15 @@ public class HumanSnake extends Snake {
 				move(getBoard().getCell(nextMove()));
 			} catch (InterruptedException | IOException e) {
 			}
+		}
+	}
+
+	// Wait for MILLISECONDS_TO_JOIN_BEFORE_GAME
+	private synchronized void waitForGameToStart() {
+		try {
+			while (!Server.isReadyToPlay)
+				wait();
+		} catch (InterruptedException e) {
 		}
 	}
 
