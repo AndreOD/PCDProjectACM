@@ -89,7 +89,8 @@ public abstract class Snake extends Thread implements Serializable {
 	 */
 	protected void move(Cell cell) throws InterruptedException {
 		// Add Snake's Head
-		if( !cell.request(this) ) return; //Happens when HumanSnake tries to move to an ocupied Position
+		if (!cell.request(this))
+			return; // Happens when HumanSnake tries to move to an ocupied Position
 		cells.add(cell);
 
 		if (leftToIncrease > 0)
@@ -125,9 +126,10 @@ public abstract class Snake extends Thread implements Serializable {
 	protected void doInitialPositioning() {
 		// Random position on the first column.
 		// At startup, snake occupies a single cell
-		int posX = 0;
-		int posY = (int) (Math.random() * Board.NUM_ROWS);
-		BoardPosition at = new BoardPosition(posX, posY);
+		BoardPosition at;
+		do {
+			at = generateInitiaBoardPosition();
+		} while (board.getCell(at).isOcupiedBySnakeOrObstacle());
 
 		try {
 			board.getCell(at).request(this);
@@ -136,6 +138,10 @@ public abstract class Snake extends Thread implements Serializable {
 		}
 		cells.add(board.getCell(at));
 		System.err.println("Snake " + getIdentification() + " starting at:" + getCells().getLast());
+	}
+
+	private BoardPosition generateInitiaBoardPosition() {
+		return new BoardPosition(0, (int) (Math.random() * Board.NUM_ROWS));
 	}
 
 	// Object class

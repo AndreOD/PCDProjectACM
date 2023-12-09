@@ -4,47 +4,52 @@ import main.environment.Board;
 import main.environment.BoardPosition;
 import main.environment.Direction;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.Scanner;
 
-/** Class for a remote snake, controlled by a human
-  * 
-  * @author luismota
-  *
-  */
+/**
+ * Class for a remote snake, controlled by a human
+ * 
+ * @author luismota
+ *
+ */
 public class HumanSnake extends Snake {
 
 	private transient Direction direction = Direction.NULL;
-	private transient Scanner in;
+	private transient BufferedReader in;
 
-  // Constructors
-	public HumanSnake(int id, Board board, Scanner in) {
-		super(id,board);
+	// Constructors
+	public HumanSnake(int id, Board board, BufferedReader in) {
+		super(id, board);
 		this.in = in;
 	}
 
-	 @Override
-	 public void run() {
-		 doInitialPositioning();
-		 System.err.println(super.toString() + " initial size:" + cells.size());
+	@Override
+	public void run() {
+		doInitialPositioning();
+		System.err.println(super.toString() + " initial size:" + cells.size());
 
-		 while (!getBoard().isFinished()) {
-			 try {
-//				 if (in.hasNext())
-//					 setDirection(in.nextLine());
-				 BoardPosition nextMove = nextMove();
+		while (!getBoard().isFinished()) {
+			try {
+				if (in.ready())
+					setDirection(in.readLine());
 
-				 //Print do deus
-				 System.err.println(getIdentification() + " trying to move to " + nextMove);
-				 //Deus
+				BoardPosition nextMove = nextMove();
 
-				 if (nextMove.x < 0 || nextMove.x >= Board.NUM_COLUMNS || nextMove.y < 0 || nextMove.y >= Board.NUM_ROWS )
-					 continue; //ignore move
-				 move(getBoard().getCell(nextMove()));
-			 } catch (InterruptedException e) {}
-		 }
-	 }
-	public void setDirection(String directionString){
-		switch (directionString){
+				if (nextMove.x < 0 || nextMove.x >= Board.NUM_COLUMNS || nextMove.y < 0
+						|| nextMove.y >= Board.NUM_ROWS) {
+					direction = Direction.NULL;
+					continue; // ignore move
+				}
+				move(getBoard().getCell(nextMove()));
+			} catch (InterruptedException | IOException e) {
+			}
+		}
+	}
+
+	public void setDirection(String directionString) {
+		switch (directionString) {
 			case "U":
 				direction = Direction.UP;
 				break;
@@ -59,9 +64,8 @@ public class HumanSnake extends Snake {
 		}
 	}
 
-	private BoardPosition nextMove(){
+	private BoardPosition nextMove() {
 		return getHeadPosition().plus(direction.getVector());
 	}
-
 
 }
