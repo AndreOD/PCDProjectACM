@@ -14,25 +14,30 @@ import main.game.Goal;
 import main.game.Obstacle;
 import main.game.Snake;
 
-/** Remote representation of the game, no local threads involved.
+/**
+ * Remote representation of the game, no local threads involved.
  * Game state will be changed when updated info is received from Srver.
  * Only for part II of the project.
+ * 
  * @author luismota
  *
  */
-public class RemoteBoard extends Board{
+public class RemoteBoard extends Board {
 
-	//KeyCode sent Before the next one, determined to see if u need to resent the sameKeycode
+	// KeyCode sent Before the next one, determined to see if u need to resent the
+	// sameKeycode
 	private int lastCode = -1;
 
-	//Used to check if the user has pressed another key, turns to true in init and at key release
+	// Used to check if the user has pressed another key, turns to true in init and
+	// at key release
 	private boolean canSwitch = false;
 
 	private PrintWriter keyOutputStream;
-	
+
 	@Override
 	public void handleKeyPress(int keyCode) {
-		if (!canSwitch || lastCode == keyCode)return;
+		if (!canSwitch || lastCode == keyCode)
+			return;
 		keyOutputStream.println(getCharToSend(keyCode));
 		lastCode = keyCode;
 		canSwitch = false;
@@ -48,8 +53,7 @@ public class RemoteBoard extends Board{
 		canSwitch = true;
 	}
 
-
-	public void setKeyOutputStream(PrintWriter outputStream){
+	public void setKeyOutputStream(PrintWriter outputStream) {
 		keyOutputStream = outputStream;
 	}
 
@@ -57,8 +61,8 @@ public class RemoteBoard extends Board{
 	 * Client will send the Characters U(UP),D(DOWN),R(RIGHT),L(LEFT) to the server
 	 * The Char 'N' is return when the client should not send anything to server
 	 **/
-	public char getCharToSend(int keyCodeToSend){
-		switch (keyCodeToSend){
+	public char getCharToSend(int keyCodeToSend) {
+		switch (keyCodeToSend) {
 			case KeyEvent.VK_LEFT:
 				return 'L';
 			case KeyEvent.VK_UP:
@@ -71,7 +75,5 @@ public class RemoteBoard extends Board{
 				return 'N';
 		}
 	}
-
-
 
 }
