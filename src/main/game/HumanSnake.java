@@ -51,10 +51,10 @@ public class HumanSnake extends Snake {
 	}
 
 	// Wait for MILLISECONDS_TO_JOIN_BEFORE_GAME
-	private synchronized void waitForGameToStart() {
+	private void waitForGameToStart() {
 		try {
-			while (!Server.isReadyToPlay)
-				wait();
+			if (!Server.isReadyToPlay)
+				Thread.sleep(Server.MILLISECONDS_TO_JOIN_BEFORE_GAME);
 		} catch (InterruptedException e) {
 		}
 	}
