@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class BarrierTimeout {
 
-    private long timeout;
+    private long timeout = -1; // If Timeout was not initialized, will wait permanently.
     Lock lock = new ReentrantLock();
     Condition notWaiting = lock.newCondition();
     private static List<BarrierTimeout> list = new ArrayList<>();
