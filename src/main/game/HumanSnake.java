@@ -43,7 +43,7 @@ public class HumanSnake extends Snake {
 				if (nextMove.x < 0 || nextMove.x >= Board.NUM_COLUMNS || nextMove.y < 0
 						|| nextMove.y >= Board.NUM_ROWS) {
 					direction = Direction.NULL;
-					continue; // ignore move
+					continue; // ignore movement
 				}
 				move(getBoard().getCell(nextMove()));
 			} catch (InterruptedException | IOException e) {

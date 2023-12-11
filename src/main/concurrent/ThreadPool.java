@@ -6,6 +6,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+* Custom ThreadPool for obstacle movement implementation
+
+*/
+
+
 public class ThreadPool {
 
     private BlockingQueue<Runnable> blockingQueue;
@@ -68,17 +74,5 @@ public class ThreadPool {
             }
         }
     }
-
-    // public ThreadPool(List<Runnable> tasks, int numberOfWorkers) {
-    // blockingQueue = new LinkedBlockingQueue<>();
-    // for(Runnable task : tasks)
-    // blockingQueue.add(task);
-    //
-    // for (int i = 0 ; i < numberOfWorkers ; i++){
-    // WorkerThread worker = new WorkerThread();
-    // workers.add(worker);
-    // worker.start();
-    // }
-    // }
 
 }

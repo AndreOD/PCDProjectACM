@@ -1,15 +1,5 @@
 package main.environment;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Observable;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-
 import main.concurrent.ThreadPool;
 import main.game.*;
 
@@ -35,21 +25,16 @@ public class LocalBoard extends Board{
 		}
 
 		addObstacles(NUM_OBSTACLES);
-		Goal goal=addGoal();
+		addGoal();
 	}
 
 	// Init
 	public void init() {
 		for(Snake s:snakes)
 			s.start();
-
 		setChanged();
-		// ThreadingPoolWorking for ObstacleMovers
-		threadPool = new ThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES);
+		threadPool = new ThreadPool(NUM_SIMULTANEOUS_MOVING_OBSTACLES); // ThreadPool for ObstacleMovers
 		getObstacles().forEach(obstacle -> threadPool.submit(new ObstacleMover(obstacle,this)));
-
-
-		// TODO: launch other threads
 
 	}
 
@@ -67,9 +52,5 @@ public class LocalBoard extends Board{
 	public void handleKeyRelease() {
 		// do nothing... No keys relevant in local game
 	}
-
-
-
-
 
 }

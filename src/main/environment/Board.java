@@ -55,6 +55,9 @@ public abstract class Board extends Observable implements Serializable {
 	public BoardPosition getGoalPosition() {
 		return goalPosition;
 	}
+	public boolean isFinished() {
+		return isFinished;
+	}
 
 	protected BoardPosition getRandomPosition() {
 		return new BoardPosition((int) (Math.random() * NUM_ROWS), (int) (Math.random() * NUM_ROWS));
@@ -131,29 +134,10 @@ public abstract class Board extends Observable implements Serializable {
 
 	public abstract void handleKeyRelease();
 
-	// Testing
-	public void printCells(String wantedClass) {
-		for (int i = 0; i < cells.length; i++)
-			for (int j = 0; j < cells[i].length; j++)
-				switch (wantedClass) {
-					case "Goal":
-						if (cells[i][j].isOcupiedByGoal())
-							System.err.println(cells[i][j]);
-						break;
-					default:
-						break;
-				}
-
-	}
-
-	// Observable Class
+	// Observable Parent Class
 	@Override
 	public void setChanged() {
 		super.setChanged();
 		notifyObservers();
-	}
-
-	public boolean isFinished() {
-		return isFinished;
 	}
 }

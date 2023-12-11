@@ -1,14 +1,6 @@
 package main.remote;
 
 import main.environment.Board;
-import main.environment.BoardPosition;
-import main.environment.Cell;
-import main.environment.LocalBoard;
-import main.game.Server;
-import main.gui.SnakeGui;
-
-import javax.swing.*;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -25,9 +17,6 @@ import java.net.UnknownHostException;
  */
 
 public class Client {
-
-    // Client vai ter um object RemoteBoard que irá representar o estado do jogo
-
     private int serverPort;
     private InetAddress serverAddress;
     private RemoteBoard board = new RemoteBoard();
@@ -95,11 +84,11 @@ public class Client {
     }
 
     public static void main(String[] args) throws UnknownHostException {
-        InetAddress serverAddress = InetAddress.getByName("localhost");
-        Integer port = 12345;
-
+//        InetAddress serverAddress = InetAddress.getByName("localhost");
+//        Integer port = 12345;
+        InetAddress serverAddress = InetAddress.getByName(args[0]);
+        Integer port = Integer.parseInt(args[1]);
         Client client = new Client(serverAddress, port);
-        // TODO
     }
 
 }
