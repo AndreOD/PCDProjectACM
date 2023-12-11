@@ -8,8 +8,12 @@ import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class RemoteGui implements Observer {
+/**
+* GUI used for client side Game display
+*
+*/
 
+public class RemoteGui implements Observer {
 
     private JFrame frame;
     private BoardComponent boardGui;

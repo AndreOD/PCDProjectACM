@@ -2,7 +2,6 @@ package main.game;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
 import main.concurrent.BarrierTimeout;
 import main.environment.BoardPosition;
 import main.environment.LocalBoard;
@@ -42,7 +41,6 @@ public class AutomaticSnake extends Snake {
 	}
 
 	boolean canMove() {
-		// return getBoard().getGoalPosition() != null;
 		return !getBoard().isFinished();
 	}
 
@@ -58,7 +56,6 @@ public class AutomaticSnake extends Snake {
 
 		while (canMove()) {
 			try {
-				// System.err.println(toString() + " trying to move to " + nextMove());
 				move(getBoard().getCell(nextMove(isRandomMove)));
 				isRandomMove = false;
 			} catch (InterruptedException e) {

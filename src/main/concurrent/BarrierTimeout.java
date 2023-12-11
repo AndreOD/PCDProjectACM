@@ -6,6 +6,12 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Mechanism used by the Threads snake and ThreadPool workers
+ * to wait a certain time after the game starts to also start
+ *
+ */
+
 public class BarrierTimeout {
 
     private long timeout = -1; // If Timeout was not initialized, will wait permanently.

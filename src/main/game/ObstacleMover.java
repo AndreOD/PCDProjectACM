@@ -7,7 +7,7 @@ import main.environment.LocalBoard;
 public class ObstacleMover implements Runnable {
 	private Obstacle obstacle;
 	private LocalBoard board;
-	private static final int OBSTACLE_MOVE_INTERVAL = 400;
+	private static final int OBSTACLE_MOVE_INTERVAL = 400; //Milliseconds between moves
 
 
 	// Constructors
@@ -17,7 +17,7 @@ public class ObstacleMover implements Runnable {
 		this.board = board;
 	}
 
-	// Thread Class
+	// Thread Parent Class
 	@Override
 	public void run() {
 		try {
@@ -45,6 +45,5 @@ public class ObstacleMover implements Runnable {
 					return;
 				}}}
 	}
-
 
 }

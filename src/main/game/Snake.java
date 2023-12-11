@@ -3,9 +3,6 @@ package main.game;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.function.Predicate;
-
-import main.environment.LocalBoard;
-import main.gui.SnakeGui;
 import main.environment.Board;
 import main.environment.BoardPosition;
 import main.environment.Cell;

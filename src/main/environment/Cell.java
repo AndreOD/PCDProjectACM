@@ -2,8 +2,6 @@ package main.environment;
 
 import java.io.Serializable;
 
-import javax.sound.midi.SysexMessage;
-
 import main.game.*;
 
 /**
@@ -56,7 +54,7 @@ public class Cell implements Serializable {
         if (snake instanceof HumanSnake && isOcupiedBySnakeOrObstacle())
             return false;
         while (snake instanceof AutomaticSnake && isOcupiedBySnakeOrObstacle())
-            wait(); // TODO change wait to increase performance.
+            wait();
         ocuppyingSnake = snake;
         return true;
     }

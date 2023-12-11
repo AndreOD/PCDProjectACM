@@ -22,9 +22,11 @@ public class Server {
     public BarrierTimeout barrier = BarrierTimeout.getInstance();
 
     public void startServer() {
+        System.out.println("Starting Server...");
         try {
             serverSocket = new ServerSocket(PORT, 10);
             initBoard();
+            System.out.println("--- Server started! Waiting for connections! ---");
             waitForConnections();
         } catch (IOException e) {
 
@@ -45,8 +47,8 @@ public class Server {
     private void waitForConnections() throws IOException {
         while (true) {
             Socket newConnection = serverSocket.accept();
-            ServerConnectionHandler svConect = new ServerConnectionHandler(newConnection);
-            svConect.start();
+            ServerConnectionHandler connectionHandler = new ServerConnectionHandler(newConnection);
+            connectionHandler.start();
         }
     }
 
@@ -67,7 +69,8 @@ public class Server {
         @Override
         public void run() {
             try {
-                System.out.println("New Client number " + id + " Connected");
+                System.out.println("New Client number " + id + " connected " +
+                        "from " + connection.getInetAddress().getHostAddress() + " port " + connection.getPort());
                 getStreams();
                 createSnake();
                 sendBoard();

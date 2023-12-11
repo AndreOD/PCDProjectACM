@@ -4,7 +4,7 @@ import main.environment.Board;
 import main.environment.LocalBoard;
 
 public class Goal extends GameElement {
-	public static final int MAX_VALUE = 9; // TODO Confirmar com o professor valor
+	public static final int MAX_VALUE = 9;
 	private int value = 1;
 	private Board board;
 
@@ -44,7 +44,7 @@ public class Goal extends GameElement {
 		} else { // Game Ends
 			board.setGoalPosition(null);
 			board.setFinished(true);
-			board.getSnakes().forEach(t -> t.interrupt());
+			board.getSnakes().forEach(snake -> snake.interrupt());
 			if (board  instanceof LocalBoard)
 				((LocalBoard)board).endThreadPool();
 		}
