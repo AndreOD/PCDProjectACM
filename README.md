@@ -3,7 +3,7 @@
 
 In this project we applied Multithreading Techniques and TCP Protocol inspired in the Blockade Snake Game.
 
-<img src=""/>
+<img src="https://github.com/AndreOD/PCDProjectACM/blob/master/SnakeGame.PNG?raw=true"/>
 
 
 
