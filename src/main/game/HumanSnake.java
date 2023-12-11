@@ -1,12 +1,12 @@
 package main.game;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import main.concurrent.BarrierTimeout;
 import main.environment.Board;
 import main.environment.BoardPosition;
 import main.environment.Direction;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Scanner;
 
 /**
  * Class for a remote snake, controlled by a human
@@ -29,6 +29,9 @@ public class HumanSnake extends Snake {
 	public void run() {
 		doInitialPositioning();
 		System.err.println(super.toString() + " initial size:" + cells.size());
+
+		// Wait for MILLISECONDS_TO_JOIN_BEFORE_GAME
+		BarrierTimeout.getInstance().waitForTimeout();
 
 		while (!getBoard().isFinished()) {
 			try {

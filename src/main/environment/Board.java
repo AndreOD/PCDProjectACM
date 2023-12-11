@@ -39,6 +39,7 @@ public abstract class Board extends Observable implements Serializable {
 
 		return cells;
 	}
+
 	public Cell getCell(BoardPosition cellCoord) {
 		return cells[cellCoord.x][cellCoord.y];
 	}
@@ -82,7 +83,7 @@ public abstract class Board extends Observable implements Serializable {
 		isFinished = finished;
 	}
 
-	public void setCells(Cell[][] cells){
+	public void setCells(Cell[][] cells) {
 		this.cells = cells;
 	}
 
@@ -94,8 +95,9 @@ public abstract class Board extends Observable implements Serializable {
 		boolean placed = false;
 		while (!placed) {
 			BoardPosition pos = getRandomPosition();
-			if ( getCell(pos).setGameElement(gameElement)) {  //Cell.setGameElement returns a boolean if cell is empty
-				if (gameElement instanceof Goal) setGoalPosition(pos);
+			if (getCell(pos).setGameElement(gameElement)) { // Cell.setGameElement returns a boolean if cell is empty
+				if (gameElement instanceof Goal)
+					setGoalPosition(pos);
 				placed = true;
 			}
 		}
