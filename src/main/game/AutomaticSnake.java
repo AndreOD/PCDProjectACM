@@ -1,16 +1,11 @@
 package main.game;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.swing.text.Position;
-
-import main.environment.LocalBoard;
-import main.gui.SnakeGui;
-import main.environment.Cell;
-import main.environment.Board;
+import main.concurrent.BarrierTimeout;
 import main.environment.BoardPosition;
+import main.environment.LocalBoard;
 
 public class AutomaticSnake extends Snake {
 
@@ -35,8 +30,9 @@ public class AutomaticSnake extends Snake {
 
 		if (!random && !snakePositions.contains(positionToGoal))
 			return positionToGoal;
-			
-		BoardPosition randPosition = neighboringPositions.get(ThreadLocalRandom.current().nextInt(neighboringPositions.size()));
+
+		BoardPosition randPosition = neighboringPositions
+				.get(ThreadLocalRandom.current().nextInt(neighboringPositions.size()));
 
 		while (snakePositions.contains(randPosition) || randPosition.equals(positionToGoal))
 			randPosition = neighboringPositions.get(ThreadLocalRandom.current().nextInt(neighboringPositions.size()));
@@ -46,7 +42,7 @@ public class AutomaticSnake extends Snake {
 	}
 
 	boolean canMove() {
-		//return getBoard().getGoalPosition() != null;
+		// return getBoard().getGoalPosition() != null;
 		return !getBoard().isFinished();
 	}
 
@@ -54,9 +50,9 @@ public class AutomaticSnake extends Snake {
 	@Override
 	public void run() {
 		doInitialPositioning();
-		try {
-			sleep(Server.MILLISECONDS_TO_JOIN_BEFORE_GAME);
-		} catch (InterruptedException e) {}
+
+		// Wait for MILLISECONDS_TO_JOIN_BEFORE_GAME
+		BarrierTimeout.getInstance().waitForTimeout();
 		boolean isRandomMove = false;
 		System.err.println(super.toString() + " initial size:" + cells.size());
 

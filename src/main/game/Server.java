@@ -1,18 +1,17 @@
 package main.game;
 
-import main.environment.Board;
-import main.environment.LocalBoard;
-import main.gui.SnakeGui;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import main.concurrent.BarrierTimeout;
+import main.environment.Board;
+import main.environment.LocalBoard;
+import main.gui.SnakeGui;
 
 public class Server {
 
@@ -20,8 +19,7 @@ public class Server {
     protected final static int PORT = 12345; // Random port
     private ServerSocket serverSocket;
     private Board board = new LocalBoard();
-    public static boolean isReadyToPlay = false;
-    List<ServerConnectionHandler> conectionHanlders = new ArrayList<>();
+    public BarrierTimeout barrier = BarrierTimeout.getInstance();
 
     public void startServer() {
         try {
@@ -41,27 +39,15 @@ public class Server {
     private void initBoard() {
         SnakeGui localGui = new SnakeGui(board, 600, 0);
         localGui.init();
-        new Thread(() -> {
-            try {
-                Thread.sleep(MILLISECONDS_TO_JOIN_BEFORE_GAME);
-            } catch (InterruptedException e) {
-            }
-            isReadyToPlay = true;
-            conectionHanlders.forEach(t -> t.gameHasStarted());
-        }).start();
+        barrier.setTimeout(MILLISECONDS_TO_JOIN_BEFORE_GAME);
     }
 
     private void waitForConnections() throws IOException {
         while (true) {
             Socket newConnection = serverSocket.accept();
             ServerConnectionHandler svConect = new ServerConnectionHandler(newConnection);
-            conectionHanlders.add(svConect);
             svConect.start();
         }
-    }
-
-    public boolean isReadyToPlay() {
-        return isReadyToPlay;
     }
 
     private class ServerConnectionHandler extends Thread {
@@ -120,10 +106,6 @@ public class Server {
             if (in != null)
                 in.close();
             connection.close();
-        }
-
-        private void gameHasStarted() {
-            snake.interrupt();
         }
     }
 
