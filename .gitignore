@@ -10,12 +10,10 @@ out/
 .idea/jsLibraryMappings.xml
 
 
-.classpath
 .factorypath
 .project
 .settings
 .sts4-cache
-bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
