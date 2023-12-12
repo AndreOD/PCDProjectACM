@@ -28,7 +28,8 @@ public class BoardComponent extends JComponent implements KeyListener{
 
 	public BoardComponent(Board board) {
 		this.board = board;
-		obstacleImage=new ImageIcon(getClass().getResource("/obstacle.png")).getImage();
+		//obstacleImage=new ImageIcon(getClass().getResource("/obstacle.png")).getImage();
+		obstacleImage=new ImageIcon("images/obstacle.png").getImage();
 		// Necessary for key listener
 		setFocusable(true);
 		addKeyListener(this);
